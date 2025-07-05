@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parish Bookstore Inventory Management System - Presentation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Slide 1: Title Slide -->
+        <div class="slide active" id="slide-1">
+            <div class="slide-content title-slide">
+                <div class="title-content">
+                    <h1 class="main-title">Parish Bookstore Inventory Management System</h1>
+                    <h2 class="subtitle">Transforming Community Book Ministry Through Technology</h2>
+                    <div class="presentation-info">
+                        <p class="created-for">Created for: Parish Council Presentation</p>
+                        <div class="decorative-elements">
+                            <div class="book-icon">📚</div>
+                            <div class="church-icon">⛪</div>
+                            <div class="book-icon">📖</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Project Overview -->
+        <div class="slide" id="slide-2">
+            <div class="slide-content">
+                <h1>Project Overview</h1>
+                <div class="content-grid">
+                    <div class="content-section">
+                        <h3>Project Goals</h3>
+                        <p>Develop a comprehensive bookstore inventory system to modernize parish book ministry operations</p>
+                    </div>
+                    <div class="content-section">
+                        <h3>Key Benefits</h3>
+                        <ul>
+                            <li>Accurate stock reporting</li>
+                            <li>Improved parishioner service</li>
+                            <li>Automated council reporting</li>
+                        </ul>
+                    </div>
+                    <div class="content-section">
+                        <h3>Technology Stack</h3>
+                        <ul>
+                            <li>GoLang (Backend)</li>
+                            <li>Fyne GUI Framework</li>
+                            <li>Database Integration</li>
+                        </ul>
+                    </div>
+                    <div class="content-section">
+                        <h3>Target Users</h3>
+                        <ul>
+                            <li>Parish staff</li>
+                            <li>Parishioners</li>
+                            <li>Council members</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: System Architecture Diagram -->
+        <div class="slide" id="slide-3">
+            <div class="slide-content">
+                <h1>System Architecture</h1>
+                <div class="architecture-diagram">
+                    <div class="arch-layer">
+                        <div class="arch-box ui-layer">
+                            <h4>User Interface Layer</h4>
+                            <p>Fyne GUI</p>
+                        </div>
+                    </div>
+                    <div class="arch-arrow">↓</div>
+                    <div class="arch-layer">
+                        <div class="arch-box app-layer">
+                            <h4>Application Layer</h4>
+                            <p>GoLang Business Logic</p>
+                        </div>
+                    </div>
+                    <div class="arch-arrow">↓</div>
+                    <div class="arch-layer">
+                        <div class="arch-box data-layer">
+                            <h4>Data Layer</h4>
+                            <p>Database Storage</p>
+                        </div>
+                    </div>
+                    <div class="arch-side">
+                        <div class="arch-box reporting-module">
+                            <h4>Reporting Module</h4>
+                            <p>Parish Council Reports</p>
+                        </div>
+                        <div class="arch-box access-points">
+                            <h4>User Access Points</h4>
+                            <p>Staff Terminal | Public View</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: GoLang Onboarding Information -->
+        <div class="slide" id="slide-4">
+            <div class="slide-content">
+                <h1>GoLang Onboarding Information</h1>
+                <div class="two-column">
+                    <div class="column">
+                        <h3>Why Go for this project?</h3>
+                        <ul>
+                            <li>Simple and reliable</li>
+                            <li>Great for desktop applications</li>
+                            <li>Strong standard library</li>
+                            <li>Easy to learn and maintain</li>
+                        </ul>
+                        <h3>Resources</h3>
+                        <ul>
+                            <li>Official Go tutorials</li>
+                            <li>Go documentation</li>
+                            <li>Community forums</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h3>Learning Path</h3>
+                        <div class="learning-timeline">
+                            <div class="timeline-item">
+                                <div class="week-label">Week 1</div>
+                                <div class="week-content">Go basics and syntax</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="week-label">Week 2</div>
+                                <div class="week-content">Data structures and functions</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="week-label">Week 3</div>
+                                <div class="week-content">Database integration</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="week-label">Week 4</div>
+                                <div class="week-content">GUI development with Fyne</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Fyne Framework Introduction -->
+        <div class="slide" id="slide-5">
+            <div class="slide-content">
+                <h1>Fyne Framework Introduction</h1>
+                <div class="two-column">
+                    <div class="column">
+                        <h3>What is Fyne?</h3>
+                        <p>Cross-platform GUI toolkit for Go</p>
+                        <h4>Key Features:</h4>
+                        <ul>
+                            <li>Native look and feel</li>
+                            <li>Easy to learn and use</li>
+                            <li>Single codebase for multiple platforms</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h3>Why Fyne for Parish Bookstore?</h3>
+                        <ul>
+                            <li>Desktop application needed</li>
+                            <li>Simple interface for volunteers</li>
+                            <li>Professional appearance</li>
+                            <li>Offline capability</li>
+                        </ul>
+                        <div class="feature-highlight">
+                            <p><strong>Perfect for parish environment:</strong> Reliable, user-friendly, and doesn't require internet connection</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Business Proposition - Problem Statement -->
+        <div class="slide" id="slide-6">
+            <div class="slide-content">
+                <h1>Business Proposition - Current Challenges</h1>
+                <div class="problem-grid">
+                    <div class="problem-item">
+                        <div class="problem-icon">📝</div>
+                        <h3>Manual Inventory Tracking</h3>
+                        <p>Time-consuming paper-based processes</p>
+                    </div>
+                    <div class="problem-item">
+                        <div class="problem-icon">❌</div>
+                        <h3>Inaccurate Stock Counts</h3>
+                        <p>Human errors in tracking lead to discrepancies</p>
+                    </div>
+                    <div class="problem-item">
+                        <div class="problem-icon">📊</div>
+                        <h3>Difficulty Reporting to Council</h3>
+                        <p>Manual compilation of reports is error-prone</p>
+                    </div>
+                    <div class="problem-item">
+                        <div class="problem-icon">👥</div>
+                        <h3>Limited Visibility for Parishioners</h3>
+                        <p>No way to check prices or availability</p>
+                    </div>
+                    <div class="problem-item">
+                        <div class="problem-icon">⏰</div>
+                        <h3>Time-Intensive Processes</h3>
+                        <p>Volunteers spend too much time on admin tasks</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Business Proposition - Solution Benefits -->
+        <div class="slide" id="slide-7">
+            <div class="slide-content">
+                <h1>Solution Benefits</h1>
+                <div class="two-column">
+                    <div class="column">
+                        <h3>For Parish Council</h3>
+                        <div class="benefit-list">
+                            <div class="benefit-item">
+                                <span class="benefit-icon">💰</span>
+                                <span>Accurate financial reporting</span>
+                            </div>
+                            <div class="benefit-item">
+                                <span class="benefit-icon">📈</span>
+                                <span>Real-time inventory valuation</span>
+                            </div>
+                            <div class="benefit-item">
+                                <span class="benefit-icon">📋</span>
+                                <span>Clear profit/loss tracking</span>
+                            </div>
+                            <div class="benefit-item">
+                                <span class="benefit-icon">🤖</span>
+                                <span>Automated monthly reports</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <h3>For Parishioners</h3>
+                        <div class="benefit-list">
+                            <div class="benefit-item">
+                                <span class="benefit-icon">🏷️</span>
+                                <span>Easy price checking</span>
+                            </div>
+                            <div class="benefit-item">
+                                <span class="benefit-icon">📚</span>
+                                <span>Stock availability information</span>
+                            </div>
+                            <div class="benefit-item">
+                                <span class="benefit-icon">😊</span>
+                                <span>Better service experience</span>
+                            </div>
+                            <div class="benefit-item">
+                                <span class="benefit-icon">⚡</span>
+                                <span>Reduced wait times</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Expected ROI and Impact -->
+        <div class="slide" id="slide-8">
+            <div class="slide-content">
+                <h1>Expected ROI and Impact</h1>
+                <div class="two-column">
+                    <div class="column">
+                        <h3>Cost Savings</h3>
+                        <div class="roi-item">
+                            <h4>20-30% Efficiency Gain</h4>
+                            <p>Reduced volunteer time on administrative tasks</p>
+                        </div>
+                        <div class="roi-item">
+                            <h4>Better Inventory Turnover</h4>
+                            <p>Accurate tracking leads to optimized stock levels</p>
+                        </div>
+                        <div class="roi-item">
+                            <h4>Reduced Stock Losses</h4>
+                            <p>Better tracking prevents shrinkage and losses</p>
+                        </div>
+                        <div class="roi-item">
+                            <h4>Improved Cash Flow</h4>
+                            <p>Better reporting enables smarter purchasing decisions</p>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <h3>Ministry Enhancement</h3>
+                        <div class="roi-item">
+                            <h4>Better Serving Parishioners</h4>
+                            <p>Improved customer experience and service quality</p>
+                        </div>
+                        <div class="roi-item">
+                            <h4>Professional Operations</h4>
+                            <p>Modern, efficient bookstore management</p>
+                        </div>
+                        <div class="roi-item">
+                            <h4>Transparent Reporting</h4>
+                            <p>Clear financial accountability to parish community</p>
+                        </div>
+                        <div class="roi-item">
+                            <h4>Growth Potential</h4>
+                            <p>Scalable system supports future expansion</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Implementation Timeline -->
+        <div class="slide" id="slide-9">
+            <div class="slide-content">
+                <h1>Implementation Timeline</h1>
+                <div class="timeline">
+                    <div class="timeline-phase">
+                        <div class="phase-number">1</div>
+                        <div class="phase-content">
+                            <h3>Month 1: GoLang Team Training</h3>
+                            <p>Skill development and foundation building</p>
+                        </div>
+                    </div>
+                    <div class="timeline-phase">
+                        <div class="phase-number">2</div>
+                        <div class="phase-content">
+                            <h3>Month 2: Core System Development</h3>
+                            <p>Database design and backend functionality</p>
+                        </div>
+                    </div>
+                    <div class="timeline-phase">
+                        <div class="phase-number">3</div>
+                        <div class="phase-content">
+                            <h3>Month 3: Fyne GUI Development</h3>
+                            <p>User interface design and implementation</p>
+                        </div>
+                    </div>
+                    <div class="timeline-phase">
+                        <div class="phase-number">4</div>
+                        <div class="phase-content">
+                            <h3>Month 4: Testing and Training</h3>
+                            <p>Quality assurance and user training</p>
+                        </div>
+                    </div>
+                    <div class="timeline-phase">
+                        <div class="phase-number">5</div>
+                        <div class="phase-content">
+                            <h3>Month 5: Deployment and Support</h3>
+                            <p>Go-live and ongoing support setup</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Next Steps and Questions -->
+        <div class="slide" id="slide-10">
+            <div class="slide-content">
+                <h1>Next Steps and Questions</h1>
+                <div class="two-column">
+                    <div class="column">
+                        <h3>Immediate Actions</h3>
+                        <div class="action-list">
+                            <div class="action-item">
+                                <span class="action-number">1</span>
+                                <span>Approve project budget</span>
+                            </div>
+                            <div class="action-item">
+                                <span class="action-number">2</span>
+                                <span>Select development team</span>
+                            </div>
+                            <div class="action-item">
+                                <span class="action-number">3</span>
+                                <span>Begin GoLang training</span>
+                            </div>
+                            <div class="action-item">
+                                <span class="action-number">4</span>
+                                <span>Set up development environment</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <h3>Questions for Discussion</h3>
+                        <ul>
+                            <li>What is the approved budget range?</li>
+                            <li>Who will be on the development team?</li>
+                            <li>What is the preferred go-live date?</li>
+                            <li>Are there specific reporting requirements?</li>
+                            <li>What training support is needed?</li>
+                        </ul>
+                        <div class="contact-info">
+                            <h4>Contact Information</h4>
+                            <p>For questions about this project, please contact the parish office.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Controls -->
+        <div class="nav-controls">
+            <button class="btn btn--secondary nav-btn" id="prev-btn" disabled>← Previous</button>
+            <div class="slide-counter">
+                <span id="current-slide">1</span> of <span id="total-slides">10</span>
+            </div>
+            <button class="btn btn--primary nav-btn" id="next-btn">Next →</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

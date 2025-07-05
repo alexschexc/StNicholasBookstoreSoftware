@@ -1,0 +1,6 @@
+Component,Specification,Cost,Notes
+Hardware,Standard PC/Laptop,$0 (existing),"Windows 10+, macOS 10.14+, or Linux"
+Barcode Scanner,USB Handheld Scanner,$50-100,Optional for faster inventory updates
+Software License,Go + Fyne (Open Source),$0,No licensing fees
+Database,SQLite or PostgreSQL,$0,"Free, reliable options"
+Development Tools,VS Code or GoLand IDE,$0-200/year,Professional development environment

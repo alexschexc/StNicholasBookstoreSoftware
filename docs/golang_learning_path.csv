@@ -1,0 +1,7 @@
+Week,Topic,Hours,Resources
+1,Go Basics & Syntax,10,"Official Go Tour, basic tutorials"
+2,Data Structures & Functions,12,"Go by Example, practice exercises"
+3,Database Integration,15,"SQL drivers, database/sql package"
+4,Fyne GUI Development,20,"Fyne documentation, sample projects"
+5,Project Implementation,25,Hands-on development work
+6,Testing & Debugging,15,"Go testing package, debugging tools"
