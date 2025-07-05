@@ -1,0 +1,48 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Bookstore API
+  description: "TODO: do better than Bookstore API description"
+
+schemes:
+  - http
+host: bookstore.orthodox.net
+basePath: /v1
+
+paths:
+  /inventory:
+    get:
+      summary: Get all available inventory
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Inventory'
+  /inventory/{id}:
+    get:
+      summary: Get an inventory by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          format: uuid
+          description: Inventory ID
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/Inventory'
+definitions:
+  Inventory:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+      name:
+        type: string
+      description:
+        type: string
