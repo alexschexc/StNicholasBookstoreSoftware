@@ -12,11 +12,11 @@ TODO: document here what we are doing for the client side
 
 ## API
 
-We implement API using [OpenAPI 2.0 (Swagger)](https://swagger.io/specification/v2/) specification.
-This implementation has been chosen because of the following:
+We implement API using [OpenAPI 2.0 (Swagger)](https://swagger.io/specification/v2/) specification. This approach has been chosen because:
 
-- it is design for the given domain and the problem
-- initial development team has more experience with this API type amongst viable alternatives
+- code generation for both: client and server
+- RESTful is a widely used API protocol
+- development team has more experience with this API type amongst viable alternatives
 
 Alternatives considered:
 
