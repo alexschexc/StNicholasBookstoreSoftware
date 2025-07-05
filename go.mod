@@ -12,6 +12,7 @@ require (
 	github.com/go-openapi/validate v0.24.0
 	github.com/golang-migrate/migrate/v4 v4.18.3
 	github.com/jessevdk/go-flags v1.6.1
+	github.com/mattn/go-sqlite3 v1.14.22
 	github.com/onsi/gomega v1.15.0
 	golang.org/x/net v0.41.0
 )
@@ -29,7 +30,6 @@ require (
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/mailru/easyjson v0.9.0 // indirect
-	github.com/mattn/go-sqlite3 v1.14.22 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/oklog/ulid v1.3.1 // indirect
 	github.com/opentracing/opentracing-go v1.2.0 // indirect
