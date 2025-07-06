@@ -8,7 +8,19 @@ TODO: architecture goes here
 
 ## Client/UI
 
-TODO: document here what we are doing for the client side
+We implement client as a Next.js application, and it is implemented in `web/bookstore`.
+Tutorial: https://nextjs.org/learn/dashboard-app/getting-started.
+
+### Prerequisites
+
+- (Node.js)[https://nodejs.org/en/download/current]
+- Package manager:
+
+```sh
+npm install -g pnpm
+```
+
+Light example generating and consuming API: https://medium.com/@youry.stancatte/generating-typescript-interfaces-from-swagger-1910cc7a726a.
 
 ## API
 
