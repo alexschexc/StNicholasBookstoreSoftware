@@ -1,0 +1,33 @@
+name: Build & Test API
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches-ignore: [ "main" ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.24'
+        cache-dependency-path: subdir/go.sum
+
+    - name: Install dependencies
+      run: |
+            go mod tidy
+
+    - name: Test with Go
+      run: go test ./... -json > TestResults.json
+        
+    - name: Upload Go test results
+      uses: actions/upload-artifact@v4
+      with:
+        name: Go-results
+        path: TestResults.json
