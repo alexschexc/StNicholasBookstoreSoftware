@@ -1,6 +1,7 @@
 # Bookstore
 
 TODO: general description, goals, etc.
+TODO: rename repo for brevity
 
 ## Architecture
 
