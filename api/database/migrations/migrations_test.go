@@ -3,10 +3,10 @@ package migrations_test
 import (
 	"database/sql"
 	"fmt"
-	"os"
 	"testing"
 
 	"github.com/alexschexc/bookstore/api/database/migrations"
+	"github.com/alexschexc/bookstore/api/testutil"
 	. "github.com/onsi/gomega"
 
 	// load SQLite3 driver explicitly
@@ -15,11 +15,7 @@ import (
 
 func TestMigrations(t *testing.T) {
 	g := NewWithT(t)
-	tmp := tempFile(t, g)
-	db, err := sql.Open("sqlite3", tmp)
-	g.Expect(err).ToNot(HaveOccurred())
-	t.Cleanup(func() { db.Close() })
-
+	tmp := testutil.TempFile(t, g)
 	dbURI := fmt.Sprintf("sqlite3://%s", tmp)
 
 	pending, err := migrations.Pending(dbURI)
@@ -32,12 +28,8 @@ func TestMigrations(t *testing.T) {
 	pending, err = migrations.Pending(dbURI)
 	g.Expect(err).ToNot(HaveOccurred())
 	g.Expect(pending).To(BeFalse())
-}
 
-func tempFile(t *testing.T, g *WithT) string {
-	tmp, err := os.CreateTemp("", "sqlite-bookstore.db")
+	db, err := sql.Open("sqlite3", tmp)
 	g.Expect(err).ToNot(HaveOccurred())
-	t.Cleanup(func() { os.Remove(tmp.Name()) })
-	tmp.Close()
-	return tmp.Name()
+	t.Cleanup(func() { db.Close() })
 }

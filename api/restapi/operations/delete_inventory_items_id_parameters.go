@@ -14,19 +14,19 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// NewGetInventoryIDParams creates a new GetInventoryIDParams object
+// NewDeleteInventoryItemsIDParams creates a new DeleteInventoryItemsIDParams object
 //
 // There are no default values defined in the spec.
-func NewGetInventoryIDParams() GetInventoryIDParams {
+func NewDeleteInventoryItemsIDParams() DeleteInventoryItemsIDParams {
 
-	return GetInventoryIDParams{}
+	return DeleteInventoryItemsIDParams{}
 }
 
-// GetInventoryIDParams contains all the bound params for the get inventory ID operation
+// DeleteInventoryItemsIDParams contains all the bound params for the delete inventory items ID operation
 // typically these are obtained from a http.Request
 //
-// swagger:parameters GetInventoryID
-type GetInventoryIDParams struct {
+// swagger:parameters DeleteInventoryItemsID
+type DeleteInventoryItemsIDParams struct {
 
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
@@ -41,8 +41,8 @@ type GetInventoryIDParams struct {
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
 // for simple values it will use straight method calls.
 //
-// To ensure default values, the struct must have been initialized with NewGetInventoryIDParams() beforehand.
-func (o *GetInventoryIDParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
+// To ensure default values, the struct must have been initialized with NewDeleteInventoryItemsIDParams() beforehand.
+func (o *DeleteInventoryItemsIDParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
 	var res []error
 
 	o.HTTPRequest = r
@@ -58,7 +58,7 @@ func (o *GetInventoryIDParams) BindRequest(r *http.Request, route *middleware.Ma
 }
 
 // bindID binds and validates parameter ID from path.
-func (o *GetInventoryIDParams) bindID(rawData []string, hasKey bool, formats strfmt.Registry) error {
+func (o *DeleteInventoryItemsIDParams) bindID(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	var raw string
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]
@@ -82,7 +82,7 @@ func (o *GetInventoryIDParams) bindID(rawData []string, hasKey bool, formats str
 }
 
 // validateID carries on validations for parameter ID
-func (o *GetInventoryIDParams) validateID(formats strfmt.Registry) error {
+func (o *DeleteInventoryItemsIDParams) validateID(formats strfmt.Registry) error {
 
 	if err := validate.FormatOf("id", "path", "uuid", o.ID.String(), formats); err != nil {
 		return err

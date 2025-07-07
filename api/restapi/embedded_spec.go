@@ -28,25 +28,62 @@ func init() {
     "version": "1.0.0"
   },
   "host": "bookstore.orthodox.net",
-  "basePath": "/v1",
+  "basePath": "/api/v1",
   "paths": {
-    "/inventory": {
+    "/inventory-items": {
       "get": {
         "summary": "Get all available inventory",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Category of the inventory to filter by:\n  * ` + "`" + `biblio` + "`" + ` - Books, calendars, etc.\n  * ` + "`" + `liturgical` + "`" + ` - Oil, insence, etc.\n",
+            "name": "category",
+            "in": "query"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful operation",
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Inventory"
+                "$ref": "#/definitions/InventoryItem"
               }
             }
+          },
+          "401": {
+            "$ref": "#/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new Inventory Item",
+        "parameters": [
+          {
+            "name": "fields",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/InventoryFields"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/InventoryItem"
+            }
+          },
+          "401": {
+            "$ref": "#/responses/UnauthorizedError"
           }
         }
       }
     },
-    "/inventory/{id}": {
+    "/inventory-items/{id}": {
       "get": {
         "summary": "Get an inventory by ID",
         "parameters": [
@@ -63,30 +100,136 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "$ref": "#/definitions/Inventory"
+              "$ref": "#/definitions/InventoryItem"
             }
+          },
+          "401": {
+            "$ref": "#/responses/UnauthorizedError"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Inventory item by ID",
+        "parameters": [
+          {
+            "type": "string",
+            "format": "uuid",
+            "description": "Inventory ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful operation"
+          },
+          "401": {
+            "$ref": "#/responses/UnauthorizedError"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update Inventory item by ID",
+        "parameters": [
+          {
+            "type": "string",
+            "format": "uuid",
+            "description": "Inventory ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "fields",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/InventoryFields"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/InventoryItem"
+            }
+          },
+          "401": {
+            "$ref": "#/responses/UnauthorizedError"
           }
         }
       }
     }
   },
   "definitions": {
-    "Inventory": {
+    "InventoryFields": {
       "type": "object",
       "properties": {
-        "description": {
+        "category": {
           "type": "string"
-        },
-        "id": {
-          "type": "string",
-          "format": "uuid"
         },
         "name": {
           "type": "string"
         }
       }
+    },
+    "InventoryItem": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/InventoryFields"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        }
+      ]
+    },
+    "Principal": {
+      "type": "object",
+      "properties": {
+        "scopes": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        }
+      }
     }
-  }
+  },
+  "responses": {
+    "Error": {
+      "description": "Internal Server Error",
+      "headers": {
+        "WWW_Error": {
+          "type": "string"
+        }
+      }
+    },
+    "UnauthorizedError": {
+      "description": "Autentication information is missing or invalid",
+      "headers": {
+        "WWW_Authenticate": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "basic": {
+      "type": "basic"
+    }
+  },
+  "security": [
+    {
+      "basic": []
+    }
+  ]
 }`))
 	FlatSwaggerJSON = json.RawMessage([]byte(`{
   "schemes": [
@@ -99,25 +242,77 @@ func init() {
     "version": "1.0.0"
   },
   "host": "bookstore.orthodox.net",
-  "basePath": "/v1",
+  "basePath": "/api/v1",
   "paths": {
-    "/inventory": {
+    "/inventory-items": {
       "get": {
         "summary": "Get all available inventory",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Category of the inventory to filter by:\n  * ` + "`" + `biblio` + "`" + ` - Books, calendars, etc.\n  * ` + "`" + `liturgical` + "`" + ` - Oil, insence, etc.\n",
+            "name": "category",
+            "in": "query"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful operation",
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Inventory"
+                "$ref": "#/definitions/InventoryItem"
+              }
+            }
+          },
+          "401": {
+            "description": "Autentication information is missing or invalid",
+            "headers": {
+              "WWW_Authenticate": {
+                "type": "string"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "headers": {
+              "WWW_Error": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new Inventory Item",
+        "parameters": [
+          {
+            "name": "fields",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/InventoryFields"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/InventoryItem"
+            }
+          },
+          "401": {
+            "description": "Autentication information is missing or invalid",
+            "headers": {
+              "WWW_Authenticate": {
+                "type": "string"
               }
             }
           }
         }
       }
     },
-    "/inventory/{id}": {
+    "/inventory-items/{id}": {
       "get": {
         "summary": "Get an inventory by ID",
         "parameters": [
@@ -134,7 +329,77 @@ func init() {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "$ref": "#/definitions/Inventory"
+              "$ref": "#/definitions/InventoryItem"
+            }
+          },
+          "401": {
+            "description": "Autentication information is missing or invalid",
+            "headers": {
+              "WWW_Authenticate": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Inventory item by ID",
+        "parameters": [
+          {
+            "type": "string",
+            "format": "uuid",
+            "description": "Inventory ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful operation"
+          },
+          "401": {
+            "description": "Autentication information is missing or invalid",
+            "headers": {
+              "WWW_Authenticate": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update Inventory item by ID",
+        "parameters": [
+          {
+            "type": "string",
+            "format": "uuid",
+            "description": "Inventory ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "fields",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/InventoryFields"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/InventoryItem"
+            }
+          },
+          "401": {
+            "description": "Autentication information is missing or invalid",
+            "headers": {
+              "WWW_Authenticate": {
+                "type": "string"
+              }
             }
           }
         }
@@ -142,21 +407,72 @@ func init() {
     }
   },
   "definitions": {
-    "Inventory": {
+    "InventoryFields": {
       "type": "object",
       "properties": {
-        "description": {
+        "category": {
           "type": "string"
-        },
-        "id": {
-          "type": "string",
-          "format": "uuid"
         },
         "name": {
           "type": "string"
         }
       }
+    },
+    "InventoryItem": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/InventoryFields"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        }
+      ]
+    },
+    "Principal": {
+      "type": "object",
+      "properties": {
+        "scopes": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        }
+      }
     }
-  }
+  },
+  "responses": {
+    "Error": {
+      "description": "Internal Server Error",
+      "headers": {
+        "WWW_Error": {
+          "type": "string"
+        }
+      }
+    },
+    "UnauthorizedError": {
+      "description": "Autentication information is missing or invalid",
+      "headers": {
+        "WWW_Authenticate": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "basic": {
+      "type": "basic"
+    }
+  },
+  "security": [
+    {
+      "basic": []
+    }
+  ]
 }`))
 }

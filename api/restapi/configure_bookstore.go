@@ -6,14 +6,10 @@ import (
 	"crypto/tls"
 	"net/http"
 
+	"github.com/alexschexc/bookstore/api/restapi/operations"
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/runtime/middleware"
-
-	"github.com/alexschexc/bookstore/api/restapi/operations"
 )
-
-//go:generate swagger generate server --target ../../api --name Bookstore --spec ../../swagger.yaml --principal interface{}
 
 func configureFlags(api *operations.BookstoreAPI) {
 	// api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{ ... }
@@ -37,19 +33,7 @@ func configureAPI(api *operations.BookstoreAPI) http.Handler {
 
 	api.JSONProducer = runtime.JSONProducer()
 
-	if api.GetInventoryHandler == nil {
-		api.GetInventoryHandler = operations.GetInventoryHandlerFunc(func(params operations.GetInventoryParams) middleware.Responder {
-			return middleware.NotImplemented("operation operations.GetInventory has not yet been implemented")
-		})
-	}
-	if api.GetInventoryIDHandler == nil {
-		api.GetInventoryIDHandler = operations.GetInventoryIDHandlerFunc(func(params operations.GetInventoryIDParams) middleware.Responder {
-			return middleware.NotImplemented("operation operations.GetInventoryID has not yet been implemented")
-		})
-	}
-
 	api.PreServerShutdown = func() {}
-
 	api.ServerShutdown = func() {}
 
 	return setupGlobalMiddleware(api.Serve(setupMiddlewares))
@@ -78,3 +62,5 @@ func setupMiddlewares(handler http.Handler) http.Handler {
 func setupGlobalMiddleware(handler http.Handler) http.Handler {
 	return handler
 }
+
+// func configureAPI() {}

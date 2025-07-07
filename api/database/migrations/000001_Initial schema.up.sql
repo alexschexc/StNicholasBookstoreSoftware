@@ -1,5 +1,5 @@
-CREATE TABLE IF NOT EXISTS inventory(
-    id UUID,
-    name TEXT,
-    primary key(id)
+CREATE TABLE IF NOT EXISTS inventory_items(
+    id UUID NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    category TEXT NOT NULL
 );
