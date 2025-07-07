@@ -18,6 +18,8 @@ import (
 	"github.com/go-openapi/spec"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+
+	"github.com/alexschexc/bookstore/api/models"
 )
 
 // NewBookstoreAPI creates a new Bookstore instance
@@ -42,12 +44,28 @@ func NewBookstoreAPI(spec *loads.Document) *BookstoreAPI {
 
 		JSONProducer: runtime.JSONProducer(),
 
-		GetInventoryHandler: GetInventoryHandlerFunc(func(params GetInventoryParams) middleware.Responder {
-			return middleware.NotImplemented("operation GetInventory has not yet been implemented")
+		DeleteInventoryItemsIDHandler: DeleteInventoryItemsIDHandlerFunc(func(params DeleteInventoryItemsIDParams, principal *models.Principal) middleware.Responder {
+			return middleware.NotImplemented("operation DeleteInventoryItemsID has not yet been implemented")
 		}),
-		GetInventoryIDHandler: GetInventoryIDHandlerFunc(func(params GetInventoryIDParams) middleware.Responder {
-			return middleware.NotImplemented("operation GetInventoryID has not yet been implemented")
+		GetInventoryItemsHandler: GetInventoryItemsHandlerFunc(func(params GetInventoryItemsParams, principal *models.Principal) middleware.Responder {
+			return middleware.NotImplemented("operation GetInventoryItems has not yet been implemented")
 		}),
+		GetInventoryItemsIDHandler: GetInventoryItemsIDHandlerFunc(func(params GetInventoryItemsIDParams, principal *models.Principal) middleware.Responder {
+			return middleware.NotImplemented("operation GetInventoryItemsID has not yet been implemented")
+		}),
+		PatchInventoryItemsIDHandler: PatchInventoryItemsIDHandlerFunc(func(params PatchInventoryItemsIDParams, principal *models.Principal) middleware.Responder {
+			return middleware.NotImplemented("operation PatchInventoryItemsID has not yet been implemented")
+		}),
+		PostInventoryItemsHandler: PostInventoryItemsHandlerFunc(func(params PostInventoryItemsParams, principal *models.Principal) middleware.Responder {
+			return middleware.NotImplemented("operation PostInventoryItems has not yet been implemented")
+		}),
+
+		// Applies when the Authorization header is set with the Basic scheme
+		BasicAuth: func(user string, pass string) (*models.Principal, error) {
+			return nil, errors.NotImplemented("basic auth  (basic) has not yet been implemented")
+		},
+		// default authorizer is authorized meaning no requests are blocked
+		APIAuthorizer: security.Authorized(),
 	}
 }
 
@@ -84,10 +102,23 @@ type BookstoreAPI struct {
 	//   - application/json
 	JSONProducer runtime.Producer
 
-	// GetInventoryHandler sets the operation handler for the get inventory operation
-	GetInventoryHandler GetInventoryHandler
-	// GetInventoryIDHandler sets the operation handler for the get inventory ID operation
-	GetInventoryIDHandler GetInventoryIDHandler
+	// BasicAuth registers a function that takes username and password and returns a principal
+	// it performs authentication with basic auth
+	BasicAuth func(string, string) (*models.Principal, error)
+
+	// APIAuthorizer provides access control (ACL/RBAC/ABAC) by providing access to the request and authenticated principal
+	APIAuthorizer runtime.Authorizer
+
+	// DeleteInventoryItemsIDHandler sets the operation handler for the delete inventory items ID operation
+	DeleteInventoryItemsIDHandler DeleteInventoryItemsIDHandler
+	// GetInventoryItemsHandler sets the operation handler for the get inventory items operation
+	GetInventoryItemsHandler GetInventoryItemsHandler
+	// GetInventoryItemsIDHandler sets the operation handler for the get inventory items ID operation
+	GetInventoryItemsIDHandler GetInventoryItemsIDHandler
+	// PatchInventoryItemsIDHandler sets the operation handler for the patch inventory items ID operation
+	PatchInventoryItemsIDHandler PatchInventoryItemsIDHandler
+	// PostInventoryItemsHandler sets the operation handler for the post inventory items operation
+	PostInventoryItemsHandler PostInventoryItemsHandler
 
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
@@ -165,11 +196,24 @@ func (o *BookstoreAPI) Validate() error {
 		unregistered = append(unregistered, "JSONProducer")
 	}
 
-	if o.GetInventoryHandler == nil {
-		unregistered = append(unregistered, "GetInventoryHandler")
+	if o.BasicAuth == nil {
+		unregistered = append(unregistered, "BasicAuth")
 	}
-	if o.GetInventoryIDHandler == nil {
-		unregistered = append(unregistered, "GetInventoryIDHandler")
+
+	if o.DeleteInventoryItemsIDHandler == nil {
+		unregistered = append(unregistered, "DeleteInventoryItemsIDHandler")
+	}
+	if o.GetInventoryItemsHandler == nil {
+		unregistered = append(unregistered, "GetInventoryItemsHandler")
+	}
+	if o.GetInventoryItemsIDHandler == nil {
+		unregistered = append(unregistered, "GetInventoryItemsIDHandler")
+	}
+	if o.PatchInventoryItemsIDHandler == nil {
+		unregistered = append(unregistered, "PatchInventoryItemsIDHandler")
+	}
+	if o.PostInventoryItemsHandler == nil {
+		unregistered = append(unregistered, "PostInventoryItemsHandler")
 	}
 
 	if len(unregistered) > 0 {
@@ -186,12 +230,22 @@ func (o *BookstoreAPI) ServeErrorFor(operationID string) func(http.ResponseWrite
 
 // AuthenticatorsFor gets the authenticators for the specified security schemes
 func (o *BookstoreAPI) AuthenticatorsFor(schemes map[string]spec.SecurityScheme) map[string]runtime.Authenticator {
-	return nil
+	result := make(map[string]runtime.Authenticator)
+	for name := range schemes {
+		switch name {
+		case "basic":
+			result[name] = o.BasicAuthenticator(func(username, password string) (interface{}, error) {
+				return o.BasicAuth(username, password)
+			})
+
+		}
+	}
+	return result
 }
 
 // Authorizer returns the registered authorizer
 func (o *BookstoreAPI) Authorizer() runtime.Authorizer {
-	return nil
+	return o.APIAuthorizer
 }
 
 // ConsumersFor gets the consumers for the specified media types.
@@ -259,14 +313,26 @@ func (o *BookstoreAPI) initHandlerCache() {
 		o.handlers = make(map[string]map[string]http.Handler)
 	}
 
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/inventory-items/{id}"] = NewDeleteInventoryItemsID(o.context, o.DeleteInventoryItemsIDHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/inventory"] = NewGetInventory(o.context, o.GetInventoryHandler)
+	o.handlers["GET"]["/inventory-items"] = NewGetInventoryItems(o.context, o.GetInventoryItemsHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/inventory/{id}"] = NewGetInventoryID(o.context, o.GetInventoryIDHandler)
+	o.handlers["GET"]["/inventory-items/{id}"] = NewGetInventoryItemsID(o.context, o.GetInventoryItemsIDHandler)
+	if o.handlers["PATCH"] == nil {
+		o.handlers["PATCH"] = make(map[string]http.Handler)
+	}
+	o.handlers["PATCH"]["/inventory-items/{id}"] = NewPatchInventoryItemsID(o.context, o.PatchInventoryItemsIDHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/inventory-items"] = NewPostInventoryItems(o.context, o.PostInventoryItemsHandler)
 }
 
 // Serve creates a http handler to serve the API over HTTP

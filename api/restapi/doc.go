@@ -6,7 +6,7 @@
 //	Schemes:
 //	  http
 //	Host: bookstore.orthodox.net
-//	BasePath: /v1
+//	BasePath: /api/v1
 //	Version: 1.0.0
 //
 //	Consumes:

@@ -11,15 +11,15 @@ import (
 	golangswaggerpaths "path"
 )
 
-// GetInventoryURL generates an URL for the get inventory operation
-type GetInventoryURL struct {
+// PostInventoryItemsURL generates an URL for the post inventory items operation
+type PostInventoryItemsURL struct {
 	_basePath string
 }
 
 // WithBasePath sets the base path for this url builder, only required when it's different from the
 // base path specified in the swagger spec.
 // When the value of the base path is an empty string
-func (o *GetInventoryURL) WithBasePath(bp string) *GetInventoryURL {
+func (o *PostInventoryItemsURL) WithBasePath(bp string) *PostInventoryItemsURL {
 	o.SetBasePath(bp)
 	return o
 }
@@ -27,19 +27,19 @@ func (o *GetInventoryURL) WithBasePath(bp string) *GetInventoryURL {
 // SetBasePath sets the base path for this url builder, only required when it's different from the
 // base path specified in the swagger spec.
 // When the value of the base path is an empty string
-func (o *GetInventoryURL) SetBasePath(bp string) {
+func (o *PostInventoryItemsURL) SetBasePath(bp string) {
 	o._basePath = bp
 }
 
 // Build a url path and query string
-func (o *GetInventoryURL) Build() (*url.URL, error) {
+func (o *PostInventoryItemsURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/inventory"
+	var _path = "/inventory-items"
 
 	_basePath := o._basePath
 	if _basePath == "" {
-		_basePath = "/v1"
+		_basePath = "/api/v1"
 	}
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
 
@@ -47,7 +47,7 @@ func (o *GetInventoryURL) Build() (*url.URL, error) {
 }
 
 // Must is a helper function to panic when the url builder returns an error
-func (o *GetInventoryURL) Must(u *url.URL, err error) *url.URL {
+func (o *PostInventoryItemsURL) Must(u *url.URL, err error) *url.URL {
 	if err != nil {
 		panic(err)
 	}
@@ -58,17 +58,17 @@ func (o *GetInventoryURL) Must(u *url.URL, err error) *url.URL {
 }
 
 // String returns the string representation of the path with query string
-func (o *GetInventoryURL) String() string {
+func (o *PostInventoryItemsURL) String() string {
 	return o.Must(o.Build()).String()
 }
 
 // BuildFull builds a full url with scheme, host, path and query string
-func (o *GetInventoryURL) BuildFull(scheme, host string) (*url.URL, error) {
+func (o *PostInventoryItemsURL) BuildFull(scheme, host string) (*url.URL, error) {
 	if scheme == "" {
-		return nil, errors.New("scheme is required for a full url on GetInventoryURL")
+		return nil, errors.New("scheme is required for a full url on PostInventoryItemsURL")
 	}
 	if host == "" {
-		return nil, errors.New("host is required for a full url on GetInventoryURL")
+		return nil, errors.New("host is required for a full url on PostInventoryItemsURL")
 	}
 
 	base, err := o.Build()
@@ -82,6 +82,6 @@ func (o *GetInventoryURL) BuildFull(scheme, host string) (*url.URL, error) {
 }
 
 // StringFull returns the string representation of a complete url
-func (o *GetInventoryURL) StringFull(scheme, host string) string {
+func (o *PostInventoryItemsURL) StringFull(scheme, host string) string {
 	return o.Must(o.BuildFull(scheme, host)).String()
 }

@@ -18,11 +18,13 @@ import (
 	"embed"
 	"errors"
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/golang-migrate/migrate/v4"
 
 	// must be explicitly imported to support SQLite3 driver.
+	_ "github.com/golang-migrate/migrate/v4/database/sqlite"
 	_ "github.com/golang-migrate/migrate/v4/database/sqlite3"
 	"github.com/golang-migrate/migrate/v4/source/iofs"
 )
@@ -60,18 +62,12 @@ func migrations(
 	}
 	defer dbDriver.Close()
 
-	cs := dbURI
-	if !strings.Contains(cs, "x-multi-statement=") {
-		// enable multi-statement migrations
-		cs += "&x-multi-statement=true"
-	}
-
-	migrations, err := migrate.NewWithSourceInstance("iofs", dbDriver, cs)
+	migrations, err := migrate.NewWithSourceInstance("iofs", dbDriver, dbURI)
 	if err != nil {
 		return nil, false, fmt.Errorf("failed to initiate migrations: %w", err)
 	}
 
-	_, dirty, err := migrations.Version()
+	curr, dirty, err := migrations.Version()
 	if dirty {
 		return nil, false, errors.New("previous migration failed. manual resulution is required.")
 	}
@@ -84,7 +80,16 @@ func migrations(
 		return migrations, true, nil
 	}
 
-	return migrations, false, nil
+	ver, err := dbDriver.First()
+	if err != nil {
+		if errors.Is(err, os.ErrNotExist) {
+			return migrations, false, nil
+		}
+
+		return nil, false, fmt.Errorf("failed to initiate migrations: %w", err)
+	}
+
+	return migrations, ver > curr, nil
 }
 
 // Pending returns whether there are pending migrations

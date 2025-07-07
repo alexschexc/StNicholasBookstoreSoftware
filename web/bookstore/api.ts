@@ -4,17 +4,43 @@
  */
 
 export interface paths {
-  "/inventory": {
+  "/inventory-items": {
     get: {
+      parameters: {
+        query: {
+          /**
+           * Category of the inventory to filter by:
+           *   * `biblio` - Books, calendars, etc.
+           *   * `liturgical` - Oil, insence, etc.
+           */
+          category?: string;
+        };
+      };
       responses: {
         /** Successful operation */
         200: {
-          schema: definitions["Inventory"][];
+          schema: definitions["InventoryItem"][];
         };
+        401: responses["UnauthorizedError"];
+        500: responses["Error"];
+      };
+    };
+    post: {
+      parameters: {
+        body: {
+          fields?: definitions["InventoryFields"];
+        };
+      };
+      responses: {
+        /** Successful operation */
+        201: {
+          schema: definitions["InventoryItem"];
+        };
+        401: responses["UnauthorizedError"];
       };
     };
   };
-  "/inventory/{id}": {
+  "/inventory-items/{id}": {
     get: {
       parameters: {
         path: {
@@ -25,20 +51,65 @@ export interface paths {
       responses: {
         /** Successful operation */
         200: {
-          schema: definitions["Inventory"];
+          schema: definitions["InventoryItem"];
         };
+        401: responses["UnauthorizedError"];
+      };
+    };
+    delete: {
+      parameters: {
+        path: {
+          /** Inventory ID */
+          id: string;
+        };
+      };
+      responses: {
+        /** Successful operation */
+        204: never;
+        401: responses["UnauthorizedError"];
+      };
+    };
+    patch: {
+      parameters: {
+        path: {
+          /** Inventory ID */
+          id: string;
+        };
+        body: {
+          fields?: definitions["InventoryFields"];
+        };
+      };
+      responses: {
+        /** Successful operation */
+        200: {
+          schema: definitions["InventoryItem"];
+        };
+        401: responses["UnauthorizedError"];
       };
     };
   };
 }
 
 export interface definitions {
-  Inventory: {
+  Principal: {
+    token?: string;
+    scopes?: string;
+  };
+  InventoryFields: {
+    name?: string;
+    category?: string;
+  };
+  InventoryItem: definitions["InventoryFields"] & {
     /** Format: uuid */
     id?: string;
-    name?: string;
-    description?: string;
   };
+}
+
+export interface responses {
+  /** Internal Server Error */
+  Error: unknown;
+  /** Autentication information is missing or invalid */
+  UnauthorizedError: unknown;
 }
 
 export interface operations {}

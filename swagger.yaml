@@ -7,42 +7,144 @@ info:
 schemes:
   - http
 host: bookstore.orthodox.net
-basePath: /v1
+basePath: /api/v1
+
+securityDefinitions:
+  basic:
+    type: basic
+
+# To apply Basic auth to the whole API:
+security:
+  - basic: []
 
 paths:
-  /inventory:
+  /inventory-items:
+    post:
+      summary: Create a new Inventory Item
+      parameters:
+        - in: body
+          name: fields
+          schema:
+            $ref: '#/definitions/InventoryFields'
+      responses:
+        401:
+          $ref: '#/responses/UnauthorizedError'
+
+        201:
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/InventoryItem'
     get:
       summary: Get all available inventory
+      parameters:
+        - in: query
+          name: category
+          type: string
+          description: >
+            Category of the inventory to filter by:
+              * `biblio` - Books, calendars, etc.
+              * `liturgical` - Oil, insence, etc.
       responses:
-        '200':
+        500:
+          $ref: '#/responses/Error'
+
+        401:
+          $ref: '#/responses/UnauthorizedError'
+
+        200:
           description: Successful operation
           schema:
             type: array
             items:
-              $ref: '#/definitions/Inventory'
-  /inventory/{id}:
-    get:
-      summary: Get an inventory by ID
+              $ref: '#/definitions/InventoryItem'
+
+  /inventory-items/{id}:
+    delete:
+      summary: Delete Inventory item by ID
       parameters:
-        - name: id
-          in: path
+        - in: path
+          name: id
           required: true
           type: string
           format: uuid
           description: Inventory ID
       responses:
-        '200':
+        401:
+          $ref: '#/responses/UnauthorizedError'
+        204:
+          description: Successful operation
+
+    get:
+      summary: Get an inventory by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: string
+          format: uuid
+          description: Inventory ID
+      responses:
+        401:
+          $ref: '#/responses/UnauthorizedError'
+        200:
           description: Successful operation
           schema:
-            $ref: '#/definitions/Inventory'
+            $ref: '#/definitions/InventoryItem'
+
+    patch:
+      summary: Update Inventory item by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: string
+          format: uuid
+          description: Inventory ID
+        - in: body
+          name: fields
+          schema:
+            $ref: '#/definitions/InventoryFields'
+
+      responses:
+        401:
+          $ref: '#/responses/UnauthorizedError'
+        200:
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/InventoryItem'
+
+responses:
+  Error:
+    description: Internal Server Error
+    headers:
+      WWW_Error:
+        type: string
+  UnauthorizedError:
+    description: Autentication information is missing or invalid
+    headers:
+      WWW_Authenticate:
+        type: string
+
 definitions:
-  Inventory:
+  Principal:
     type: object
     properties:
-      id:
+      token:
         type: string
-        format: uuid
+      scopes:
+        type: string
+  InventoryFields:
+    type: object
+    properties:
       name:
         type: string
-      description:
+      category:
         type: string
+  InventoryItem:
+    allOf:
+      - $ref: '#/definitions/InventoryFields'
+      - type: object
+        properties:
+          id:
+            type: string
+            format: uuid

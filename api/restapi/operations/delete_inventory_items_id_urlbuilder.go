@@ -14,8 +14,8 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// GetInventoryIDURL generates an URL for the get inventory ID operation
-type GetInventoryIDURL struct {
+// DeleteInventoryItemsIDURL generates an URL for the delete inventory items ID operation
+type DeleteInventoryItemsIDURL struct {
 	ID strfmt.UUID
 
 	_basePath string
@@ -26,7 +26,7 @@ type GetInventoryIDURL struct {
 // WithBasePath sets the base path for this url builder, only required when it's different from the
 // base path specified in the swagger spec.
 // When the value of the base path is an empty string
-func (o *GetInventoryIDURL) WithBasePath(bp string) *GetInventoryIDURL {
+func (o *DeleteInventoryItemsIDURL) WithBasePath(bp string) *DeleteInventoryItemsIDURL {
 	o.SetBasePath(bp)
 	return o
 }
@@ -34,26 +34,26 @@ func (o *GetInventoryIDURL) WithBasePath(bp string) *GetInventoryIDURL {
 // SetBasePath sets the base path for this url builder, only required when it's different from the
 // base path specified in the swagger spec.
 // When the value of the base path is an empty string
-func (o *GetInventoryIDURL) SetBasePath(bp string) {
+func (o *DeleteInventoryItemsIDURL) SetBasePath(bp string) {
 	o._basePath = bp
 }
 
 // Build a url path and query string
-func (o *GetInventoryIDURL) Build() (*url.URL, error) {
+func (o *DeleteInventoryItemsIDURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/inventory/{id}"
+	var _path = "/inventory-items/{id}"
 
 	id := o.ID.String()
 	if id != "" {
 		_path = strings.Replace(_path, "{id}", id, -1)
 	} else {
-		return nil, errors.New("id is required on GetInventoryIDURL")
+		return nil, errors.New("id is required on DeleteInventoryItemsIDURL")
 	}
 
 	_basePath := o._basePath
 	if _basePath == "" {
-		_basePath = "/v1"
+		_basePath = "/api/v1"
 	}
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
 
@@ -61,7 +61,7 @@ func (o *GetInventoryIDURL) Build() (*url.URL, error) {
 }
 
 // Must is a helper function to panic when the url builder returns an error
-func (o *GetInventoryIDURL) Must(u *url.URL, err error) *url.URL {
+func (o *DeleteInventoryItemsIDURL) Must(u *url.URL, err error) *url.URL {
 	if err != nil {
 		panic(err)
 	}
@@ -72,17 +72,17 @@ func (o *GetInventoryIDURL) Must(u *url.URL, err error) *url.URL {
 }
 
 // String returns the string representation of the path with query string
-func (o *GetInventoryIDURL) String() string {
+func (o *DeleteInventoryItemsIDURL) String() string {
 	return o.Must(o.Build()).String()
 }
 
 // BuildFull builds a full url with scheme, host, path and query string
-func (o *GetInventoryIDURL) BuildFull(scheme, host string) (*url.URL, error) {
+func (o *DeleteInventoryItemsIDURL) BuildFull(scheme, host string) (*url.URL, error) {
 	if scheme == "" {
-		return nil, errors.New("scheme is required for a full url on GetInventoryIDURL")
+		return nil, errors.New("scheme is required for a full url on DeleteInventoryItemsIDURL")
 	}
 	if host == "" {
-		return nil, errors.New("host is required for a full url on GetInventoryIDURL")
+		return nil, errors.New("host is required for a full url on DeleteInventoryItemsIDURL")
 	}
 
 	base, err := o.Build()
@@ -96,6 +96,6 @@ func (o *GetInventoryIDURL) BuildFull(scheme, host string) (*url.URL, error) {
 }
 
 // StringFull returns the string representation of a complete url
-func (o *GetInventoryIDURL) StringFull(scheme, host string) string {
+func (o *DeleteInventoryItemsIDURL) StringFull(scheme, host string) string {
 	return o.Must(o.BuildFull(scheme, host)).String()
 }
